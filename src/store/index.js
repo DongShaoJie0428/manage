@@ -7,6 +7,9 @@ import tagsView from './modules/tagsView'
 import user from './modules/user'
 import getters from './getters'
 
+// 引入用户列表
+import userlist from './modules/userlist'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -15,7 +18,8 @@ const store = new Vuex.Store({
     errorLog,
     permission,
     tagsView,
-    user
+    user,
+    userlist
   },
   getters
 })
