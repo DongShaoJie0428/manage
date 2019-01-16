@@ -141,7 +141,8 @@ export default {
     ...mapActions({
       getUserList: 'userlist/getUserList',
       updataList: 'userlist/updataList',
-      deleteUser: 'userlist/deleteUser'
+      deleteUser: 'userlist/deleteUser',
+      updataRoler: 'userlist/updataRoler'
     }),
     // 点击添加上面的角色
     handleAddRoler(tag) {
@@ -183,7 +184,7 @@ export default {
         this.$message({
           message: err,
           center: true,
-          type: 'success'
+          type: 'error'
         })
       })
     },
@@ -206,28 +207,52 @@ export default {
     submit() {
       // console.log(1);
       // 点击确定之后验证
-      this.$refs.form.validate(valid => {
+      // 判断如果是edit编辑的话  就执行这段代码
+      if (this.type === 'edit') {
+        this.$refs.form.validate(valid => {
         // console.log(valid);
-        if (valid) {
-          const { id, username, email, phone } = this.currentList
-          this.updataList({ id, username, email, phone }).then(res => {
-            this.$message({
-              message: res,
-              center: true,
-              type: 'success'
+          if (valid) {
+            const { id, username, email, phone } = this.currentList
+            this.updataList({ id, username, email, phone }).then(res => {
+              this.$message({
+                message: res,
+                center: true,
+                type: 'success'
+              })
+              // 修改之后不会让我们的页面跳回第一页
+              this.getUserList({ page: this.current })
+            }).catch(err => {
+              this.$message({
+                message: err,
+                center: true,
+                type: 'error'
+              })
             })
-            // 修改之后不会让我们的页面跳回第一页
-            this.getUserList({ page: this.current })
-          }).catch(err => {
-            this.$message({
-              message: err,
-              center: true,
-              type: 'success'
-            })
+          }
+        })
+        this.dialogVisible = false
+      } else if (this.type === 'roler') {
+        const { id } = this.currentList
+        const rolersId = this.myRolers.map(item => {
+          return this.allRolers.findIndex(value => value === item) + 1
+        })
+        this.updataRoler({ uid: id, rolersId }).then(res => {
+          this.$message({
+            message: res,
+            center: true,
+            type: 'success'
           })
-        }
-      })
-      this.dialogVisible = false
+          // 修改之后不会让我们的页面跳回第一页
+          this.getUserList({ page: this.current })
+        }).catch(err => {
+          this.$message({
+            message: err,
+            center: true,
+            type: 'error'
+          })
+        })
+        this.dialogVisible = false
+      }
     }
   }
 }

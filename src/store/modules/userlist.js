@@ -1,5 +1,5 @@
 // 引入api 方法
-import { userList, userUpdata, deleteUserInfo } from '@/api/user'
+import { userList, userUpdata, deleteUserInfo, updataRoler } from '@/api/user'
 
 const state = {
   list: []
@@ -44,6 +44,20 @@ const actions = {
   deleteUser({ commit }, action) {
     return new Promise((resolve, reject) => {
       deleteUserInfo(action).then(res => {
+        if (res.data.code === 1) {
+          resolve(res.data.msg)
+        } else {
+          reject(res.data.msg)
+        }
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  // 修改用户角色
+  updataRoler(context, data) {
+    return new Promise((resolve, reject) => {
+      updataRoler(data).then(res => {
         if (res.data.code === 1) {
           resolve(res.data.msg)
         } else {
