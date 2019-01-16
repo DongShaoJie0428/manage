@@ -108,16 +108,34 @@ export default {
   methods: {
     ...mapActions({
       getUserList: 'userlist/getUserList',
-      updataList: 'userlist/updataList'
+      updataList: 'userlist/updataList',
+      deleteUser: 'userlist/deleteUser'
     }),
     handleEdit(index, row) {
       // console.log(index, row)
       this.dialogVisible = true
       this.currentList = { ...row }
     },
+    // 点击删除，删除用户信息
     handleDelete(index, row) {
-      console.log(index, row)
+      // console.log(index, row)
+      const { id } = row
+      this.deleteUser({ uid: id }).then(res => {
+        this.$message({
+          message: res,
+          center: true,
+          type: 'success'
+        })
+        this.getUserList({ page: this.current })
+      }).catch(err => {
+        this.$message({
+          message: err,
+          center: true,
+          type: 'success'
+        })
+      })
     },
+    // 改变页面 分页器
     handleChange(page) {
       console.log('page...', page)
       // 在分页器这里做点击事件，然后传参，传过去的是我们的页数，如果不加花括号，我们看到的只是一个单纯的数字
@@ -135,6 +153,7 @@ export default {
     },
     submit() {
       // console.log(1);
+      // 点击确定之后验证
       this.$refs.form.validate(valid => {
         // console.log(valid);
         if (valid) {
@@ -145,6 +164,7 @@ export default {
               center: true,
               type: 'success'
             })
+            // 修改之后不会让我们的页面跳回第一页
             this.getUserList({ page: this.current })
           }).catch(err => {
             this.$message({

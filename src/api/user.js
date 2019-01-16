@@ -18,3 +18,12 @@ export function userUpdata(data) {
     data
   })
 }
+
+// 删除用户列表
+export function deleteUserInfo(data) {
+  return request({
+    url: '/users/action',
+    method: 'delete',
+    data
+  })
+}

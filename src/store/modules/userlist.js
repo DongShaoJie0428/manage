@@ -1,8 +1,5 @@
 // 引入api 方法
-import {
-  userList,
-  userUpdata
-} from '@/api/user'
+import { userList, userUpdata, deleteUserInfo } from '@/api/user'
 
 const state = {
   list: []
@@ -15,9 +12,8 @@ const mutations = {
 }
 
 const actions = {
-  getUserList({
-    commit
-  }, query) {
+  // 获取用户信息
+  getUserList({ commit }, query) {
     console.log('query...', query)
     return new Promise((resolve, reject) => {
       userList(query).then(res => {
@@ -30,11 +26,24 @@ const actions = {
       })
     })
   },
-  updataList({
-    commit
-  }, action) {
+  // 修改用户信息
+  updataList({ commit }, action) {
     return new Promise((resolve, reject) => {
       userUpdata(action).then(res => {
+        if (res.data.code === 1) {
+          resolve(res.data.msg)
+        } else {
+          reject(res.data.msg)
+        }
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+  // 删除用户信息
+  deleteUser({ commit }, action) {
+    return new Promise((resolve, reject) => {
+      deleteUserInfo(action).then(res => {
         if (res.data.code === 1) {
           resolve(res.data.msg)
         } else {
