@@ -5,6 +5,7 @@
     <breadcrumb class="breadcrumb-container"/>
 
     <div class="right-menu">
+      <span>{{ name }}</span>
       <template v-if="device!=='mobile'">
         <error-log class="errLog-container right-menu-item"/>
 

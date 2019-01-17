@@ -18,6 +18,7 @@ Mock.XHR.prototype.send = function() {
 //   timeout: '350-600'
 // })
 
+// mock做两件事情，一模拟数据，二拦截数据
 // 登录相关
 Mock.mock(/\/login\/login/, 'post', loginAPI.loginByUsername)
 Mock.mock(/\/login\/logout/, 'post', loginAPI.logout)

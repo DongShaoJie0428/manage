@@ -12,11 +12,11 @@ const userRouter = {
     icon: 'people'
   },
   children: [{
-      path: 'index',
-      component: () => import('@/views/userlist/index'),
-      name: 'UserList',
-      meta: { title: 'userList', noCache: true }
-    }]
+    path: 'index',
+    component: () => import('@/views/userlist/index'),
+    name: 'UserListIndex',
+    meta: { title: 'UserListIndex', noCache: true }
+  }]
 }
 
 export default userRouter

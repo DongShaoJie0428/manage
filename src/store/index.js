@@ -10,9 +10,6 @@ import getters from './getters'
 // 引入用户列表
 import userlist from './modules/userlist'
 
-// 引入用户更改信息
-import updatalist from './modules/updatalist'
-
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -22,8 +19,7 @@ const store = new Vuex.Store({
     permission,
     tagsView,
     user,
-    userlist,
-    updatalist
+    userlist
   },
   getters
 })
