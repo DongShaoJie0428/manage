@@ -61,7 +61,7 @@
           <el-input v-model="currentList.username"/>
         </el-form-item>
         <el-form-item v-if="type=='edit'" label="头像">
-          <el-upload :show-file-list="false" class="avatar-uploader" action="123">
+          <el-upload :show-file-list="false" :on-success="uploadSuccess" class="avatar-uploader" action="http://123.206.55.50:11000/upload">
             <img v-if="currentList.avatar" :src="currentList.avatar" class="avatar" style="width:100px">
             <i v-else class="el-icon-plus avatar-uploader-icon"/>
           </el-upload>
@@ -93,7 +93,7 @@
       </span>
     </el-dialog>
 
-    <el-pagination :total="100" :current-page="current" layout="prev, pager, next" @current-change="handleChange"/>
+    <el-pagination :total="300" :current-page="current" layout="prev, pager, next" @current-change="handleChange"/>
   </div>
 </template>
 
@@ -204,6 +204,19 @@ export default {
         })
         .catch(_ => {})
     },
+    // 点击上传图片
+    uploadSuccess(res, file, fileList) {
+      console.log('res...', res, 'file...', file, 'filelist...', file)
+      if (res.code === 1) {
+        this.currentList.avatar = res.data[0].path
+      } else {
+        this.$message({
+          message: res.msg,
+          center: true,
+          type: 'error'
+        })
+      }
+    },
     submit() {
       // console.log(1);
       // 点击确定之后验证
@@ -212,8 +225,8 @@ export default {
         this.$refs.form.validate(valid => {
         // console.log(valid);
           if (valid) {
-            const { id, username, email, phone } = this.currentList
-            this.updataList({ id, username, email, phone }).then(res => {
+            const { id, username, avatar, email, phone } = this.currentList
+            this.updataList({ id, username, avatar, email, phone }).then(res => {
               this.$message({
                 message: res,
                 center: true,
