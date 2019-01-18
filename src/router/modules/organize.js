@@ -28,7 +28,7 @@ const organizeRouter = {
       meta: { title: 'Review', roles: ['review'] }
     }, {
       path: 'commit',
-      component: () => import('@/views/organize/index'),
+      component: () => import('@/views/organize/commit'),
       name: 'Commit',
       meta: { title: 'Commit', roles: ['commit'] }
     }, {

@@ -28,6 +28,11 @@ import './mock' // simulation data
 import * as filters from './filters' // global filters
 // 引入自定义指令
 import './directive/permission/index'
+// 引入echart
+// 下包npm i v-charts echarts -S
+import VCharts from 'v-charts'
+
+Vue.use(VCharts)
 
 // mock 拦截数据请求
 // 拦截地址和我们一些姓名
