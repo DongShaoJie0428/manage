@@ -23,7 +23,7 @@ const organizeRouter = {
       meta: { title: 'Coding', roles: ['coding'] }
     }, {
       path: 'review',
-      component: () => import('@/views/organize/index'),
+      component: () => import('@/views/organize/review'),
       name: 'Review',
       meta: { title: 'Review', roles: ['review'] }
     }, {

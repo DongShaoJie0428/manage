@@ -1,5 +1,8 @@
 <template>
   <div>
+    <!-- 列表导出 -->
+    <el-button :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="document" @click="handleDownload">{{ $t('excel.export') }} Excel</el-button>
+
     <el-table :data="tableData" style="width: 100%">
       <el-table-column label="id" width="100">
         <template slot-scope="scope">
@@ -116,6 +119,7 @@ export default {
       }
     }
     return {
+      downloadLoading: false,
       current: 1,
       dialogVisible: false,
       type: '', // 弹框的类型，如果是edit就是用户编辑信息，roler就是修改角色
@@ -266,6 +270,25 @@ export default {
         })
         this.dialogVisible = false
       }
+    },
+    // 点击导出列表
+    handleDownload() {
+      this.downloadLoading = true
+      import('@/vendor/Export2Excel').then(excel => {
+        const tHeader = Object.keys(this.tableData[0])
+        const data = this.tableData.map(item => {
+          return Object.values(item)
+        })
+        console.log('tHeader...', tHeader, data)
+        excel.export_json_to_excel({
+          header: tHeader,
+          data,
+          filename: '用户信息', // 表头
+          autoWidth: 'true', // 宽度自动
+          bookType: 'xlsx' // 表格类型
+        })
+        this.downloadLoading = false
+      })
     }
   }
 }
